@@ -6,25 +6,23 @@
     <title>Document</title>
 </head>
 <body>
-    <input type="text">
-    <button>Add</button>
-    <ul id="todo"></ul>
+    <form>
+        <input type="text">
+        <button>Add</button>
+        <ul id="todo"></ul>
+    </form>
+    
 
     <script>
-        document.querySelector("button").onclick = () => {
+        document.querySelector("button").onclick = e => {
+            e.preventDefault();
+
             let text = document.querySelector("input").value;
             if(text == "") return false;
 
             createItem(text);
 
-            document.querySelector("input").value = "";
-            document.querySelector("input").focus();
-        }
-
-        document.querySelector("input").onkeydown = e => {
-            if(e.key == "Enter") {
-                document.querySelector("button").onclick();
-            }
+           e.currentTarget.reset();
         }
 
         function createItem(text) {
