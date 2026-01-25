@@ -3,18 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Todo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
 </head>
 <body>
-    <form>
-        <input type="text">
-        <button>Add</button>
-        <ul id="todo"></ul>
-    </form>
+    <nav class="navbar bg-dark navbar-dark">
+        <div class="container" style="max-width: 600px">
+            <a href="#" class="navbar-brand">Todo</a>
+        </div>
+    </nav>
+
+    <div class="container" style="max-width: 600px">
+        <form class="input-group my-4">
+            <input type="text" class="form-control">
+            <button class="btn btn-dark">Add</button>
+        </form>
+        
+        <ul id="todo" class="list-group"></ul>
+    </div>
     
 
     <script>
-        document.querySelector("button").onclick = e => {
+        document.querySelector("form").onsubmit = e => {
             e.preventDefault();
 
             let text = document.querySelector("input").value;
@@ -22,12 +33,21 @@
 
             createItem(text);
 
-           e.currentTarget.reset();
+            e.currentTarget.reset();
         }
 
         function createItem(text) {
             let li = document.createElement("li");
+            li.classList.add("list-group-item");
             li.textContent = text;
+
+            let del = document.createElement("a");
+            del.setAttribute("href", "#");
+            del.classList.add("fa-solid", "fa-trash", "text-danger", "float-end");
+            del.onclick = () => {
+                li.remove();
+            }
+            li.appendChild(del);
 
             document.querySelector("#todo").appendChild(li);
         }
