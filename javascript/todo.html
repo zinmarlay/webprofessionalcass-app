@@ -10,7 +10,9 @@
 <body>
     <nav class="navbar bg-dark navbar-dark">
         <div class="container" style="max-width: 600px">
-            <a href="#" class="navbar-brand">Todo</a>
+            <a href="#" class="navbar-brand">
+                Todo <span class="badge bg-danger rounded-pill ms-2">0</span>
+            </a>
         </div>
     </nav>
 
@@ -21,10 +23,16 @@
         </form>
         
         <ul id="todo" class="list-group"></ul>
+        <ul id="done" class="list-group mt-4 opacity-50"></ul>
     </div>
     
 
     <script>
+        function updateCount() {
+            document.querySelector(".badge").textContent = 
+                document.querySelectorAll("#todo li").length;
+        }
+
         document.querySelector("form").onsubmit = e => {
             e.preventDefault();
 
@@ -32,20 +40,34 @@
             if(text == "") return false;
 
             createItem(text);
+            updateCount();
 
             e.currentTarget.reset();
         }
+
+        
 
         function createItem(text) {
             let li = document.createElement("li");
             li.classList.add("list-group-item");
             li.textContent = text;
 
+            let check = document.createElement("a");
+            check.setAttribute("href", "#");
+            check.classList.add("fa-solid", "fa-check", "me-2", "float-start");
+            check.onclick = () => {
+                document.querySelector("#done").appendChild(li);
+                check.remove();
+                updateCount();
+            }
+            li.appendChild(check);
+
             let del = document.createElement("a");
             del.setAttribute("href", "#");
             del.classList.add("fa-solid", "fa-trash", "text-danger", "float-end");
             del.onclick = () => {
                 li.remove();
+                updateCount();
             }
             li.appendChild(del);
 
