@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let data = [
+            {name: "Zinmar1", age: '20'},
+            {name: "Zinmar2", age: '40'},
+            {name: "Zinmar3", age: '60'},
+            {name: "Zinmar4", age: '60'},
+            {name: "Zinmar5", age: '80'},
+        
+        ]
+        let result = data
+        .filter(user => user.age >=60)
+        .map(user => user.name);
+        
+    </script>
+    
+</body>
+</html>
