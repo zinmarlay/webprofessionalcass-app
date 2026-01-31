@@ -7,11 +7,55 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" defer></script>
+    <style>
+        body[data-theme="dark"] { background-color: #0d1117; }
+        body[data-theme="dark"] .sidebar-nav { background-color: #161b22 !important; }
+        body[data-theme="dark"] .sidebar-nav .list-group-item { background-color: #161b22 !important; border-color: #30363d; color: #c9d1d9; }
+        body[data-theme="dark"] .sidebar-nav .list-group-item.active { background-color: #238636 !important; border-color: #238636; color: #fff; }
+        body[data-theme="dark"] .sidebar-nav .text-primary { color: #58a6ff !important; }
+        body[data-theme="dark"] .main-content { background-color: #0d1117 !important; }
+        body[data-theme="dark"] .navbar-main { background-color: #161b22 !important; border-color: #30363d; }
+        body[data-theme="dark"] .navbar-main .nav-link { color: #c9d1d9 !important; }
+        body[data-theme="dark"] .alert-info { background-color: #1f2937; border-color: #374151; color: #d1d5db; }
+        body[data-theme="dark"] .stat-card { background-color: #161b22 !important; border: 1px solid #30363d; color: #c9d1d9; }
+        body[data-theme="dark"] .stat-card .text-success { color: #3fb950 !important; }
+        body[data-theme="dark"] .card { background-color: #161b22; border-color: #30363d; color: #c9d1d9; }
+        body[data-theme="dark"] .card-header.bg-light { background-color: #21262d !important; border-color: #30363d; color: #c9d1d9; }
+        body[data-theme="dark"] .table { color: #c9d1d9; }
+        body[data-theme="dark"] .table-light { background-color: #21262d !important; color: #c9d1d9; }
+        body[data-theme="dark"] .table-hover tbody tr:hover { background-color: #21262d; color: #c9d1d9; }
+        body[data-theme="dark"] .table td, body[data-theme="dark"] .table th { border-color: #30363d; }
+        body[data-theme="dark"] footer.text-muted { color: #8b949e !important; }
+        body[data-theme="dark"] #theme-toggle { color: #c9d1d9 !important; }
+        /* Moon toggle placement and alignment */
+        .nav-item:has(#theme-toggle) {
+            display: flex;
+            align-items: center;
+        }
+        #theme-toggle {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 2.25rem;
+            min-height: 2.25rem;
+            margin: 0;
+            margin-right: 0.25rem;
+            padding: 0 0.25rem;
+            line-height: 1;
+            vertical-align: middle;
+        }
+        #theme-toggle:hover {
+            opacity: 0.85;
+        }
+        #theme-toggle .fa-solid {
+            font-size: 1.1rem;
+        }
+    </style>
 </head>
-<body>
+<body data-theme="light">
     <div class="container-fluid">
        <div class="row g-0">
-        <nav class="col-2 bg-light pe-2">
+        <nav class="col-2 bg-light pe-2 sidebar-nav">
             <h1 class="text-center text-primary h3 py-3">
                 <i class="fa-solid fa-ghost"></i>
                 <span class="d-none d-lg-inline">
@@ -71,15 +115,15 @@
                 </li>
             </ul>
         </nav>
-        <div class="col-10 bg-secondary">
-            <nav class="navbar bg-light navbar-expand">
+        <div class="col-10 bg-secondary main-content">
+            <nav class="navbar bg-light navbar-expand navbar-main">
                 <div class="container-fluid">
                     <div></div>
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="fa-solid fa-moon"></i>
-                            </a>
+                            <button type="button" id="theme-toggle" class="btn btn-link nav-link text-decoration-none border-0" title="Toggle dark mode" aria-label="Toggle theme">
+                                <i class="fa-solid fa-moon" id="theme-icon"></i>
+                            </button>
                         </li>
                         <li class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
@@ -108,14 +152,14 @@
             </div>
             <div class="row p-3 flex-column flex-lg-row">
                 <div class="col mb-3">
-                    <div class="bg-light p-4">
+                    <div class="bg-light p-4 stat-card">
                         <h3>1024</h3>
                         <span class="text-success">
                             <i class="fa-solid fa-chart-line"></i>
                             Daily Users</span>
                     </div>
                 </div><div class="col mb-3">
-                    <div class="bg-light p-4">
+                    <div class="bg-light p-4 stat-card">
                         <h3>104424</h3>
                         <span class="text-success">
                             <i class="fa-solid fa-chart-line"></i>
@@ -123,7 +167,7 @@
                     </div>
                 </div>
                 <div class="col mb-3">
-                    <div class="bg-light p-4">
+                    <div class="bg-light p-4 stat-card">
                         <h3>10444</h3>
                         <span class="text-success">
                             <i class="fa-solid fa-chart-line"></i>
@@ -131,7 +175,7 @@
                     </div>
                 </div>
                 <div class="col mb-3">
-                    <div class="bg-light p-4">
+                    <div class="bg-light p-4 stat-card">
                         <h3>102884</h3>
                         <span class="text-success">
                             <i class="fa-solid fa-chart-line"></i>
@@ -224,6 +268,50 @@
         </div>
        </div>
     </div>
-    
+
+    <script>
+        (function () {
+            var THEME_KEY = 'dashboard-theme';
+            var LIGHT = 'light';
+            var DARK = 'dark';
+
+            function getStoredTheme() {
+                return localStorage.getItem(THEME_KEY) || LIGHT;
+            }
+
+            function setStoredTheme(theme) {
+                localStorage.setItem(THEME_KEY, theme);
+            }
+
+            function applyTheme(theme) {
+                document.body.setAttribute('data-theme', theme);
+                var icon = document.getElementById('theme-icon');
+                if (icon) {
+                    icon.className = theme === DARK ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+                }
+                var btn = document.getElementById('theme-toggle');
+                if (btn) {
+                    btn.setAttribute('title', theme === DARK ? 'Switch to light mode' : 'Toggle dark mode');
+                    btn.setAttribute('aria-label', theme === DARK ? 'Switch to light mode' : 'Toggle dark mode');
+                }
+            }
+
+            function toggleTheme() {
+                var current = document.body.getAttribute('data-theme') || LIGHT;
+                var next = current === DARK ? LIGHT : DARK;
+                setStoredTheme(next);
+                applyTheme(next);
+            }
+
+            document.addEventListener('DOMContentLoaded', function () {
+                var saved = getStoredTheme();
+                applyTheme(saved);
+                var toggle = document.getElementById('theme-toggle');
+                if (toggle) {
+                    toggle.addEventListener('click', toggleTheme);
+                }
+            });
+        })();
+    </script>
 </body>
 </html>
